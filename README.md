@@ -28,46 +28,28 @@
 
 ## Installation
 
-```bash
-$ npm install
-```
+1. Make sure docker compose is installed
 
 ## Running the app
 
 ```bash
-# development
-$ npm run start
+# development with watch mode
+$ make run-development-server
 
-# watch mode
-$ npm run start:dev
-
-# production mode
+# production mode (TODO)
 $ npm run start:prod
 ```
 
 ## Test
 
 ```bash
-# unit tests
+# unit tests (TODO)
 $ npm run test
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
+# test coverage (TODO)
 $ npm run test:cov
 ```
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
 ## License
 
-Nest is [MIT licensed](LICENSE).
+[MIT licensed](LICENSE).
