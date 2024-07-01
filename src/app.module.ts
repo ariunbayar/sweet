@@ -2,7 +2,8 @@ import { Module } from '@nestjs/common'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { TypeOrmModule } from '@nestjs/typeorm'
-
+import { DataSource } from 'typeorm'
+import { Customer } from './customer/customer.entity'
 
 @Module({
   imports: [
@@ -13,11 +14,14 @@ import { TypeOrmModule } from '@nestjs/typeorm'
       username: process.env.MYSQL_USER,
       password: process.env.MYSQL_PASSWORD,
       database: process.env.MYSQL_DATABASE,
-      entities: [],
+      entities: [Customer],
       synchronize: false,  // Using migrations instead
     }),
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+
+export class AppModule {
+  constructor(private dataSource: DataSource) {}
+}
