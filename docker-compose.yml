@@ -1,11 +1,40 @@
 services:
+
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: appdb
+    volumes:
+      - db-data:/var/lib/mysql   # Persist data even if container is removed
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+        labels: "${APP_ENV},db"
+        env: "${APP_ENV}"
+        compress: "true"
+
   app:
     build:
       context: .
       dockerfile: Dockerfile
+    depends_on:
+      - db
     environment:
       - NODE_ENV=development
     ports:
       - "3000:3000"
     volumes:
       - .:/app
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+        labels: "${APP_ENV},app"
+        env: "${APP_ENV}"
+        compress: "true"
+
+volumes:
+  db-data:

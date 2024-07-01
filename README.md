@@ -2,18 +2,22 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Installation
+## Setup
 
 1. Make sure docker compose is installed
+2. Fix environment variables to your needs:
+```bash
+cp .env.sample .env
+```
 
 ## Running the app
 
 ```bash
 # development with watch mode
-$ make run-development-server
+make run-development-server
 
 # production mode (TODO)
-$ npm run start:prod
+npm run start:prod
 ```
 
 ## Test
