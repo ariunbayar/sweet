@@ -100,6 +100,7 @@ Order {
 | HTTP Method | Endpoint               | Description                       |
 |-------------|------------------------|-----------------------------------|
 | POST        | [/customers](#post-customers) | Create a new customer |
+| GET         | [/customers/:id](#get-customersid) | View a specific customer by ID    |
 
 ### POST /customers
 
@@ -114,6 +115,22 @@ Creates a new customer
 
 ```json
 { "id": 1, "name": "PharmaSave" },
+```
+
+### GET /customers/:id
+
+View customer by id
+
+**Response (200 OK):**
+
+```json
+{ "id": 1, "name": "Foot Locker"}
+```
+
+**Response (404 Not found):**
+
+```json
+{"message":"Not found","error":"Not Found","statusCode":404}
 ```
 
 ## License
