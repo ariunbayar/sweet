@@ -22,14 +22,17 @@ make run-development-server
 npm run start:prod
 ```
 
-## Test
+## Test & Lint
 
 ```bash
-# unit tests (TODO)
-$ npm run test
+# lint
+$ make lint
 
-# test coverage (TODO)
-$ npm run test:cov
+# unit tests
+$ make test
+
+# test coverage
+$ make test-cov
 ```
 
 ## Migrations
