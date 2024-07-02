@@ -5,9 +5,11 @@
 ## Setup
 
 1. Make sure docker compose is installed
-2. Fix environment variables to your needs:
+
 ```bash
+# copy and fix environment variables
 cp .env.sample .env
+
 ```
 
 ## Running the app
@@ -28,6 +30,21 @@ $ npm run test
 
 # test coverage (TODO)
 $ npm run test:cov
+```
+
+## Migrations
+```bash
+# apply migrations
+docker compose exec app npm run migration:run
+
+# revert migrations
+docker compose exec app npm run migration:revert
+
+# create new migration
+docker compose exec app npm run migration:create --name=your_migration_name
+
+# generate migration
+docker compose exec app npm run migration:generate --name=your_migration_name
 ```
 
 ## Database schema
