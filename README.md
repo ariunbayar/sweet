@@ -95,6 +95,27 @@ Order {
 }
 ```
 
+## API Endpoints
+
+| HTTP Method | Endpoint               | Description                       |
+|-------------|------------------------|-----------------------------------|
+| POST        | [/customers](#post-customers) | Create a new customer |
+
+### POST /customers
+
+Creates a new customer
+
+**Payload**
+```json
+{ "name": "PharmaSave" }
+```
+
+**Response (201 OK):**
+
+```json
+{ "id": 1, "name": "PharmaSave" },
+```
+
 ## License
 
 [MIT licensed](LICENSE).
