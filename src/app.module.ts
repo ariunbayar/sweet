@@ -5,6 +5,7 @@ import { DataSource } from 'typeorm'
 
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
+import { CustomerModule } from './customer/customer.module'
 import typeorm from './config/typeorm'
 
 @Module({
@@ -23,6 +24,7 @@ import typeorm from './config/typeorm'
         logging: process.env.APP_ENV === 'development',
       }),
     }),
+    CustomerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
