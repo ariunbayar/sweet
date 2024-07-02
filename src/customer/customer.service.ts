@@ -21,10 +21,10 @@ export class CustomerService {
   /* TODO usage
   findAll(): Promise<Customer[]> {
     return this.customerRepository.find()
-  }
+    }
+    */
 
   findOne(id: number): Promise<Customer | null> {
     return this.customerRepository.findOneBy({ id })
   }
-  */
 }

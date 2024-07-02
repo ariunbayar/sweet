@@ -2,6 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { CustomerController } from './customer.controller'
 import { CustomerService } from './customer.service'
 import { CreateCustomerDto } from './dto/create-customer.dto'
+import { NotFoundException } from '@nestjs/common'
+
+const createCustomerDto: CreateCustomerDto = { name: 'The Candy Emporium' }
 
 describe('CustomerController', () => {
   let controller: CustomerController
@@ -14,7 +17,17 @@ describe('CustomerController', () => {
         {
           provide: CustomerService,
           useValue: {
-            create: jest.fn(),
+            create: jest
+              .fn()
+              .mockImplementation((customerDto: CreateCustomerDto) =>
+                Promise.resolve({ id: 1, ...customerDto }),
+              ),
+            findOne: jest.fn().mockImplementation((id: number) =>
+              Promise.resolve({
+                name: 'The Candy Emporium',
+                id,
+              }),
+            ),
           },
         },
       ],
@@ -28,15 +41,37 @@ describe('CustomerController', () => {
     expect(controller).toBeDefined()
   })
 
-  it('should create a new customer', async () => {
-    const createCustomerDto: CreateCustomerDto = { name: 'The Candy Emporium' }
-    const expectedCustomer = { id: 1, name: 'The Candy Emporium' } // Mock customer response
+  describe('create()', () => {
+    it('should create a new customer', async () => {
+      const expectedCustomer = { id: 1, ...createCustomerDto }
 
-    jest.spyOn(customerService, 'create').mockResolvedValue(expectedCustomer)
+      const result = await controller.create(createCustomerDto)
 
-    const result = await controller.create(createCustomerDto)
+      expect(result).toEqual(expectedCustomer)
+      expect(customerService.create).toHaveBeenCalledWith(createCustomerDto)
+    })
+  })
 
-    expect(result).toEqual(expectedCustomer)
-    expect(customerService.create).toHaveBeenCalledWith(createCustomerDto)
+  describe('findOne()', () => {
+    it('should find a customer by id', async () => {
+      const expectedCustomer = { id: 1, name: 'The Candy Emporium' }
+      const result = await controller.findOne(1)
+
+      expect(result).toEqual(expectedCustomer)
+      expect(customerService.findOne).toHaveBeenCalledWith(1)
+    })
+
+    it('throws NotFoundException when customer is not found', async () => {
+      jest.spyOn(customerService, 'findOne').mockResolvedValue(null)
+
+      try {
+        await controller.findOne(2)
+        fail('Expected NotFoundException to be thrown')
+      } catch (error) {
+        expect(error).toBeInstanceOf(NotFoundException)
+        expect(error.message).toEqual('Not found')
+        expect(customerService.findOne).toHaveBeenCalledWith(2)
+      }
+    })
   })
 })

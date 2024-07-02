@@ -127,6 +127,12 @@ View customer by id
 { "id": 1, "name": "Foot Locker"}
 ```
 
+**Response (404 Not found):**
+
+```json
+{"message":"Not found","error":"Not Found","statusCode":404}
+```
+
 ## License
 
 [MIT licensed](LICENSE).
