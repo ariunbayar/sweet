@@ -50,6 +50,13 @@ docker compose exec app npm run migration:create --name=your_migration_name
 docker compose exec app npm run migration:generate --name=your_migration_name
 ```
 
+## Pre-commit hooks
+
+```sh
+# Sets husky pre-commit hooks
+npm run prepare
+```
+
 ## Database schema
 ```mermaid
 erDiagram
