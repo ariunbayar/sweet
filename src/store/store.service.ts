@@ -22,4 +22,12 @@ export class StoreService {
   findOne(id: number): Promise<Store | null> {
     return this.customerRepository.findOneBy({ id })
   }
+
+  findAll(offset: number, limit: number): Promise<Store[]> {
+    return this.customerRepository.find({ skip: offset, take: limit })
+  }
+
+  count(): Promise<number> {
+    return this.customerRepository.count()
+  }
 }
