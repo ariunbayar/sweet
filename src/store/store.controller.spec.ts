@@ -18,6 +18,7 @@ describe('StoreController', () => {
             findOne: jest.fn(),
             findAll: jest.fn(),
             count: jest.fn(),
+            update: jest.fn(),
           },
         },
       ],
@@ -109,6 +110,80 @@ describe('StoreController', () => {
 
       expect(service.findAll).toHaveBeenCalledWith(0, 10)
       expect(service.count).toHaveBeenCalled()
+    })
+  })
+
+  describe('update()', () => {
+    it('should update a store', async () => {
+      const updateStoreDto = {
+        address: 'New address',
+        manager_name: 'New manager name',
+      }
+
+      const store = {
+        id: 1,
+        address: '123 Broadway, New York, NY 10007, USA',
+        manager_name: 'David Lee',
+      }
+
+      jest.spyOn(service, 'findOne').mockResolvedValue(store)
+      jest.spyOn(service, 'update').mockResolvedValue({
+        id: 1,
+        ...updateStoreDto,
+      })
+
+      expect(await controller.update(1, updateStoreDto)).toEqual({
+        id: 1,
+        address: 'New address',
+        manager_name: 'New manager name',
+      })
+
+      expect(service.findOne).toHaveBeenCalledWith(1)
+      expect(service.update).toHaveBeenCalledWith(store, updateStoreDto)
+    })
+
+    it('updates partially', async () => {
+      const store = {
+        id: 1,
+        address: '123 Broadway, New York, NY 10007, USA',
+        manager_name: 'David Lee',
+      }
+      const updateStoreDto = {
+        manager_name: 'Mia Taylor',
+      }
+
+      jest.spyOn(service, 'findOne').mockResolvedValue(store)
+      jest.spyOn(service, 'update').mockResolvedValue({
+        id: 1,
+        address: '123 Broadway, New York, NY 10007, USA',
+        manager_name: 'Mia Taylor',
+      })
+
+      expect(await controller.update(1, updateStoreDto)).toEqual({
+        id: 1,
+        address: '123 Broadway, New York, NY 10007, USA',
+        manager_name: 'Mia Taylor',
+      })
+
+      expect(service.findOne).toHaveBeenCalledWith(1)
+      expect(service.update).toHaveBeenCalledWith(store, updateStoreDto)
+    })
+
+    it('throws an error if store is not found', async () => {
+      jest.spyOn(service, 'findOne').mockResolvedValue(null)
+
+      try {
+        await controller.update(2, {
+          address: '123 Broadway, New York, NY 10007, USA',
+          manager_name: 'David Lee',
+        })
+        fail('Expected NotFoundException to be thrown')
+      } catch (error) {
+        expect(error).toBeInstanceOf(NotFoundException)
+        expect(error.message).toEqual('Not found')
+        expect(service.findOne).toHaveBeenCalledWith(2)
+        expect(service.update).not.toHaveBeenCalled()
+      }
     })
   })
 })

@@ -1,5 +1,5 @@
 import { Controller } from '@nestjs/common'
-import { Get, Post, Body } from '@nestjs/common'
+import { Get, Post, Put, Body } from '@nestjs/common'
 import { Query, Param, ParseIntPipe } from '@nestjs/common'
 import { NotFoundException } from '@nestjs/common'
 
@@ -8,6 +8,7 @@ import { PaginatedResultDto } from '../dto/paginated-result.dto'
 import { StoreService } from './store.service'
 import { CreateStoreDto } from './dto/create-store.dto'
 import { Store } from './entities/store.entity'
+import { UpdateStoreDto } from './dto/update-store.dto'
 
 @Controller('stores')
 export class StoreController {
@@ -42,5 +43,17 @@ export class StoreController {
       throw new NotFoundException(`Not found`)
     }
     return store
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateStoreDto: UpdateStoreDto,
+  ) {
+    const store = await this.storeService.findOne(id)
+    if (!store) {
+      throw new NotFoundException(`Not found`)
+    }
+    return this.storeService.update(store, updateStoreDto)
   }
 }

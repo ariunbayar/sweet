@@ -106,6 +106,7 @@ Order {
 | GET         | [/stores](#get-stores)       | List all stores             |
 | POST        | [/stores](#post-stores)      | Create a new store |
 | GET         | [/stores/:id](#get-storesid) | View a specific store by ID |
+| PUT         | [/stores/:id](#put-storesid) | Modify store by ID |
 
 ### GET /customers
 
@@ -244,6 +245,34 @@ View store by id
 ```json
 { "id": 1, "address": "123 Main St", "manager_name": "John Doe"}
 
+```
+
+**Response (404 Not found):**
+
+```json
+{"message":"Not found","error":"Not Found","statusCode":404}
+```
+
+### PUT /stores/:id
+
+Updates a store by ID.
+
+**Payload**
+
+```js
+{
+  "manager_name": "Updated Manager" // Updated manager name
+}
+```
+
+**Response (200 OK):**
+
+```js
+{
+  "id": 1,
+  "address": "789 Oak St",
+  "manager_name": "Updated Manager" // Updated manager name
+}
 ```
 
 **Response (404 Not found):**

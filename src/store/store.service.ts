@@ -4,6 +4,7 @@ import { Repository } from 'typeorm'
 
 import { Store } from './entities/store.entity'
 import { CreateStoreDto } from './dto/create-store.dto'
+import { UpdateStoreDto } from './dto/update-store.dto'
 
 @Injectable()
 export class StoreService {
@@ -29,5 +30,10 @@ export class StoreService {
 
   count(): Promise<number> {
     return this.customerRepository.count()
+  }
+
+  update(store: Store, updateStoreDto: UpdateStoreDto): Promise<Store> {
+    store = { ...store, ...updateStoreDto }
+    return this.customerRepository.save(store)
   }
 }
