@@ -101,6 +101,7 @@ Order {
 |-------------|------------------------|-----------------------------------|
 | POST        | [/customers](#post-customers) | Create a new customer |
 | GET         | [/customers/:id](#get-customersid) | View a specific customer by ID    |
+| PUT         | [/customers/:id](#put-customersid) | Modify customer by ID |
 
 ### POST /customers
 
@@ -132,6 +133,34 @@ View customer by id
 ```json
 {"message":"Not found","error":"Not Found","statusCode":404}
 ```
+
+### PUT /customers/:id
+
+Updates a customer by ID.
+
+**Payload**
+
+```js
+{
+  "name": "John Smith" // Updated name
+}
+```
+
+**Response (200 OK):**
+
+```js
+{
+  "id": 1,
+  "name": "John Smith" // Updated customer
+}
+```
+
+**Response (404 Not found):**
+
+```json
+{"message":"Not found","error":"Not Found","statusCode":404}
+```
+
 
 ## License
 

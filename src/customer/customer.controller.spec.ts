@@ -1,10 +1,19 @@
 import { Test, TestingModule } from '@nestjs/testing'
+import { NotFoundException } from '@nestjs/common'
+
 import { CustomerController } from './customer.controller'
 import { CustomerService } from './customer.service'
 import { CreateCustomerDto } from './dto/create-customer.dto'
-import { NotFoundException } from '@nestjs/common'
+import { UpdateCustomerDto } from './dto/update-customer.dto'
+import { Customer } from './customer.entity'
 
 const createCustomerDto: CreateCustomerDto = { name: 'The Candy Emporium' }
+const updateCustomerDto: UpdateCustomerDto = { name: 'Updated Name' }
+
+const oneCustomer: Customer = {
+  id: 1,
+  name: 'The Candy Emporium',
+}
 
 describe('CustomerController', () => {
   let controller: CustomerController
@@ -22,12 +31,16 @@ describe('CustomerController', () => {
               .mockImplementation((customerDto: CreateCustomerDto) =>
                 Promise.resolve({ id: 1, ...customerDto }),
               ),
-            findOne: jest.fn().mockImplementation((id: number) =>
-              Promise.resolve({
-                name: 'The Candy Emporium',
-                id,
-              }),
-            ),
+            findOne: jest
+              .fn()
+              .mockImplementation((id: number) =>
+                Promise.resolve({ ...oneCustomer, id }),
+              ),
+            update: jest
+              .fn()
+              .mockImplementation((customer, updateCustomerDto) =>
+                Promise.resolve({ ...customer, ...updateCustomerDto }),
+              ),
           },
         },
       ],
@@ -49,6 +62,33 @@ describe('CustomerController', () => {
 
       expect(result).toEqual(expectedCustomer)
       expect(customerService.create).toHaveBeenCalledWith(createCustomerDto)
+    })
+  })
+
+  describe('update()', () => {
+    it('should update a customer', async () => {
+      const result = await controller.update(1, updateCustomerDto)
+
+      expect(result).toEqual({ id: 1, name: 'Updated Name' })
+      expect(customerService.findOne).toHaveBeenCalledWith(1)
+      expect(customerService.update).toHaveBeenCalledWith(
+        oneCustomer,
+        updateCustomerDto,
+      )
+    })
+
+    it('should throw NotFoundException if customer not found', async () => {
+      jest.spyOn(customerService, 'findOne').mockResolvedValue(null)
+
+      try {
+        await controller.update(2, updateCustomerDto)
+        fail('Expected NotFoundException to be thrown')
+      } catch (error) {
+        expect(error).toBeInstanceOf(NotFoundException)
+        expect(error.message).toEqual('Not found')
+        expect(customerService.findOne).toHaveBeenCalledWith(2)
+        expect(customerService.update).not.toHaveBeenCalled()
+      }
     })
   })
 
