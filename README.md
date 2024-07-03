@@ -104,6 +104,7 @@ Order {
 | GET         | [/customers/:id](#get-customersid) | View a specific customer by ID    |
 | PUT         | [/customers/:id](#put-customersid) | Modify customer by ID |
 | POST        | [/stores](#post-stores) | Create a new store |
+| GET         | [/stores/:id](#get-storesid) | View a specific store by ID    |]
 
 ### GET /customers
 
@@ -204,6 +205,22 @@ Creates a new store
 
 ```json
 { "id": 2, "address": "456 Elm St", "manager_name": "Jane Doe" },
+```
+
+### GET /stores/:id
+
+View store by id
+
+**Response (200 OK):**
+```json
+{ "id": 1, "address": "123 Main St", "manager_name": "John Doe"}
+
+```
+
+**Response (404 Not found):**
+
+```json
+{"message":"Not found","error":"Not Found","statusCode":404}
 ```
 
 ## License

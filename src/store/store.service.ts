@@ -18,4 +18,8 @@ export class StoreService {
     customer.manager_name = createStoreDto.manager_name
     return this.customerRepository.save(customer)
   }
+
+  findOne(id: number): Promise<Store | null> {
+    return this.customerRepository.findOneBy({ id })
+  }
 }

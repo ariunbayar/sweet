@@ -16,6 +16,7 @@ describe('StoreService', () => {
           provide: getRepositoryToken(Store),
           useValue: {
             save: jest.fn(),
+            findOneBy: jest.fn(),
           },
         },
       ],
@@ -46,6 +47,28 @@ describe('StoreService', () => {
         address: '123 Broadway, New York, NY 10007, USA',
         manager_name: 'David Lee',
       })
+    })
+  })
+
+  describe('findOne()', () => {
+    it('should find a store by id', async () => {
+      const store = {
+        id: 1,
+        address: '123 Broadway, New York, NY 10007, USA',
+        manager_name: 'David Lee',
+      }
+
+      jest.spyOn(repository, 'findOneBy').mockResolvedValue(store)
+
+      expect(service.findOne(1)).resolves.toEqual(store)
+      expect(repository.findOneBy).toHaveBeenCalledWith({ id: 1 })
+    })
+
+    it('should return null if store is not found', async () => {
+      jest.spyOn(repository, 'findOneBy').mockResolvedValue(null)
+
+      expect(service.findOne(1)).resolves.toBeNull()
+      expect(repository.findOneBy).toHaveBeenCalledWith({ id: 1 })
     })
   })
 })
