@@ -25,7 +25,11 @@ export class StoreService {
   }
 
   findAll(offset: number, limit: number): Promise<Store[]> {
-    return this.customerRepository.find({ skip: offset, take: limit })
+    return this.customerRepository.find({
+      skip: offset,
+      take: limit,
+      order: { id: 'ASC' },
+    })
   }
 
   count(): Promise<number> {
