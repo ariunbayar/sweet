@@ -103,6 +103,7 @@ Order {
 | POST        | [/customers](#post-customers) | Create a new customer |
 | GET         | [/customers/:id](#get-customersid) | View a specific customer by ID    |
 | PUT         | [/customers/:id](#put-customersid) | Modify customer by ID |
+| POST        | [/stores](#post-stores) | Create a new store |
 
 ### GET /customers
 
@@ -189,6 +190,21 @@ Updates a customer by ID.
 {"message":"Not found","error":"Not Found","statusCode":404}
 ```
 
+### POST /stores
+
+Creates a new store
+
+**Payload**
+
+```json
+{ "address": "456 Elm St", "manager_name": "Jane Doe" }
+```
+
+**Response (201 OK):**
+
+```json
+{ "id": 2, "address": "456 Elm St", "manager_name": "Jane Doe" },
+```
 
 ## License
 
