@@ -103,8 +103,9 @@ Order {
 | POST        | [/customers](#post-customers) | Create a new customer |
 | GET         | [/customers/:id](#get-customersid) | View a specific customer by ID    |
 | PUT         | [/customers/:id](#put-customersid) | Modify customer by ID |
-| POST        | [/stores](#post-stores) | Create a new store |
-| GET         | [/stores/:id](#get-storesid) | View a specific store by ID    |]
+| GET         | [/stores](#get-stores)       | List all stores             |
+| POST        | [/stores](#post-stores)      | Create a new store |
+| GET         | [/stores/:id](#get-storesid) | View a specific store by ID |
 
 ### GET /customers
 
@@ -189,6 +190,34 @@ Updates a customer by ID.
 
 ```json
 {"message":"Not found","error":"Not Found","statusCode":404}
+```
+
+### GET /stores
+
+Retrieves a list of all stores. Ordered by ID ascending.
+
+**Query Parameters:**
+
+-   offset (optional): Offset number (default: 0)
+-   limit (optional): Number of stores per page (default: 10. Max 100)
+
+**Response (200 OK):**
+
+```json
+{
+  "result": [
+    {
+      "id": 1,
+      "address": "123 Main St",
+      "manager_name": "John Doe"
+    }
+  ],
+  "pagination": {
+    "offset": 0,
+    "limit": 10,
+    "total": 1
+  }
+}
 ```
 
 ### POST /stores
