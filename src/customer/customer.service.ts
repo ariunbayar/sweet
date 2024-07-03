@@ -27,13 +27,17 @@ export class CustomerService {
     return this.customerRepository.save(customer)
   }
 
-  /* TODO usage
-  findAll(): Promise<Customer[]> {
-    return this.customerRepository.find()
-    }
-    */
-
   findOne(id: number): Promise<Customer | null> {
     return this.customerRepository.findOneBy({ id })
+  }
+
+  findAll(offset: number, limit: number): Promise<Customer[]> {
+    throw new Error('Method not implemented.')
+    // return this.customerRepository.find()
+  }
+
+  count(): Promise<number> {
+    throw new Error('Method not implemented.')
+    // return this.customerRepository.count()
   }
 }
