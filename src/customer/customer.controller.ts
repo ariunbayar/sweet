@@ -17,16 +17,15 @@ export class CustomerController {
   @Get()
   async findAll(@Query() paginationDto: PaginationDto) {
     const { offset, limit } = paginationDto
+    const count = await this.customerService.count()
+    const customers = await this.customerService.findAll(offset, limit)
 
     const paginatedResultDto = new PaginatedResultDto<Customer>()
-    paginatedResultDto.result = await this.customerService.findAll(
-      offset,
-      limit,
-    )
+    paginatedResultDto.result = customers
     paginatedResultDto.pagination = {
       offset,
       limit,
-      total: await this.customerService.count(),
+      total: count,
     }
 
     return paginatedResultDto

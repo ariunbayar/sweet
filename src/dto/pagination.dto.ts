@@ -9,13 +9,10 @@ import { Transform } from 'class-transformer'
  */
 function limitToRange(min_value: number, max_value?: number) {
   if (max_value === undefined) {
-    return ({ value }: { value: number }) => {
-      Math.max(Number(value), min_value)
-    }
+    return ({ value }: { value: number }) => Math.max(Number(value), min_value)
   } else {
-    return ({ value }: { value: number }) => {
+    return ({ value }: { value: number }) =>
       Math.min(Math.max(Number(value), min_value), max_value)
-    }
   }
 }
 

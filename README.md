@@ -99,9 +99,37 @@ Order {
 
 | HTTP Method | Endpoint               | Description                       |
 |-------------|------------------------|-----------------------------------|
+| GET         | [/customers](#get-customers) | List all customers          |
 | POST        | [/customers](#post-customers) | Create a new customer |
 | GET         | [/customers/:id](#get-customersid) | View a specific customer by ID    |
 | PUT         | [/customers/:id](#put-customersid) | Modify customer by ID |
+
+### GET /customers
+
+Retrieves a list of all customers. Ordered by ID ascending.
+
+**Query Parameters:**
+
+* offset (optional): Offset number (default: 0)
+* limit (optional): Number of customers per page (default: 10. Max 100)
+
+**Response (200 OK):**
+
+```json
+{
+  "result": [
+    {
+      "id": 16,
+      "name": "Best Buy112"
+    }
+  ],
+  "pagination": {
+    "offset": 15,
+    "limit": 5,
+    "total": 16
+  }
+}
+```
 
 ### POST /customers
 

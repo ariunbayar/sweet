@@ -32,12 +32,14 @@ export class CustomerService {
   }
 
   findAll(offset: number, limit: number): Promise<Customer[]> {
-    throw new Error('Method not implemented.')
-    // return this.customerRepository.find()
+    return this.customerRepository.find({
+      skip: offset,
+      take: limit,
+      order: { id: 'ASC' },
+    })
   }
 
   count(): Promise<number> {
-    throw new Error('Method not implemented.')
-    // return this.customerRepository.count()
+    return this.customerRepository.count()
   }
 }
