@@ -41,6 +41,8 @@ describe('CustomerController', () => {
               .mockImplementation((customer, updateCustomerDto) =>
                 Promise.resolve({ ...customer, ...updateCustomerDto }),
               ),
+            findAll: jest.fn(),
+            count: jest.fn(),
           },
         },
       ],
@@ -112,6 +114,29 @@ describe('CustomerController', () => {
         expect(error.message).toEqual('Not found')
         expect(customerService.findOne).toHaveBeenCalledWith(2)
       }
+    })
+  })
+
+  describe('findAll()', () => {
+    it('should return a list of customers', async () => {
+      const expectedCustomers = [
+        { id: 1, name: 'The Candy Emporium' },
+        { id: 2, name: 'The Sweet Shop' },
+      ]
+
+      jest
+        .spyOn(customerService, 'findAll')
+        .mockResolvedValue(expectedCustomers)
+      jest.spyOn(customerService, 'count').mockResolvedValue(2)
+
+      const result = await controller.findAll({ offset: 0, limit: 10 })
+
+      expect(result).toEqual({
+        result: expectedCustomers,
+        pagination: { offset: 0, limit: 10, total: 2 },
+      })
+      expect(customerService.findAll).toHaveBeenCalledWith(0, 10)
+      expect(customerService.count).toHaveBeenCalled()
     })
   })
 })

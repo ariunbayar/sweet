@@ -27,13 +27,19 @@ export class CustomerService {
     return this.customerRepository.save(customer)
   }
 
-  /* TODO usage
-  findAll(): Promise<Customer[]> {
-    return this.customerRepository.find()
-    }
-    */
-
   findOne(id: number): Promise<Customer | null> {
     return this.customerRepository.findOneBy({ id })
+  }
+
+  findAll(offset: number, limit: number): Promise<Customer[]> {
+    return this.customerRepository.find({
+      skip: offset,
+      take: limit,
+      order: { id: 'ASC' },
+    })
+  }
+
+  count(): Promise<number> {
+    return this.customerRepository.count()
   }
 }

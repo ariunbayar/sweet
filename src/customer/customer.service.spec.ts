@@ -23,6 +23,8 @@ describe('CustomerService', () => {
           useValue: {
             save: jest.fn().mockResolvedValue(oneCustomer),
             findOneBy: jest.fn().mockResolvedValue(oneCustomer),
+            find: jest.fn(),
+            count: jest.fn(),
           },
         },
       ],
@@ -77,6 +79,30 @@ describe('CustomerService', () => {
         .mockResolvedValue(null)
       expect(service.findOne(2)).resolves.toBeNull()
       expect(repoSpy).toBeCalledWith({ id: 2 })
+    })
+  })
+
+  describe('count()', () => {
+    it('should return the count of customers', () => {
+      jest.spyOn(repository, 'count').mockResolvedValue(16)
+      expect(service.count()).resolves.toEqual(16)
+      expect(repository.count).toHaveBeenCalled()
+    })
+  })
+
+  describe('findAll()', () => {
+    it('should return all customers', () => {
+      const customers = [
+        { id: 1, name: 'The Coffee Beanery' },
+        { id: 2, name: 'The Coffee Beanery' },
+      ]
+      jest.spyOn(repository, 'find').mockResolvedValue(customers)
+      expect(service.findAll(0, 10)).resolves.toEqual(customers)
+      expect(repository.find).toHaveBeenCalledWith({
+        skip: 0,
+        take: 10,
+        order: { id: 'ASC' },
+      })
     })
   })
 })
