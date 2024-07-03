@@ -104,4 +104,41 @@ describe('StoreService', () => {
       expect(repository.count).toHaveBeenCalled()
     })
   })
+
+  describe('update()', () => {
+    it('should update a store', async () => {
+      const store = {
+        id: 1,
+        address: '123 Broadway, New York, NY 10007, USA',
+        manager_name: 'David Lee',
+      }
+      const updateStoreDto = {
+        address: 'New address',
+        manager_name: 'New manager',
+      }
+      const expected = { ...store, ...updateStoreDto }
+
+      jest.spyOn(repository, 'save').mockResolvedValue(expected)
+
+      expect(await service.update(store, updateStoreDto)).toEqual(expected)
+      expect(repository.save).toHaveBeenCalledWith(expected)
+    })
+
+    it('should update partially', async () => {
+      const store = {
+        id: 1,
+        address: '123 Broadway, New York, NY 10007, USA',
+        manager_name: 'David Lee',
+      }
+      const updateStoreDto = {
+        manager_name: 'New manager', // Only updating the manager_name
+      }
+      const expected = { ...store, ...updateStoreDto }
+
+      jest.spyOn(repository, 'save').mockResolvedValue(expected)
+
+      expect(await service.update(store, updateStoreDto)).toEqual(expected)
+      expect(repository.save).toHaveBeenCalledWith(expected)
+    })
+  })
 })
