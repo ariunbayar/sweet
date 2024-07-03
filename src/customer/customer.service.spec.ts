@@ -49,6 +49,21 @@ describe('CustomerService', () => {
     })
   })
 
+  describe('update()', () => {
+    it('should successfully update a customer', () => {
+      const customer: Customer = { id: 1, name: 'The Coffee Beanery' }
+      const updateCustomerDto = { name: 'New name' }
+
+      jest
+        .spyOn(repository, 'save')
+        .mockResolvedValue({ id: 1, name: 'New name' })
+      const result = service.update(customer, updateCustomerDto)
+
+      expect(result).resolves.toEqual({ id: 1, name: 'New name' })
+      expect(repository.save).toBeCalledWith({ id: 1, name: 'New name' })
+    })
+  })
+
   describe('findOne()', () => {
     it('should get a single customer', () => {
       const repoSpy = jest.spyOn(repository, 'findOneBy')

@@ -4,6 +4,7 @@ import { Repository } from 'typeorm'
 
 import { Customer } from './customer.entity'
 import { CreateCustomerDto } from './dto/create-customer.dto'
+import { UpdateCustomerDto } from './dto/update-customer.dto'
 
 @Injectable()
 export class CustomerService {
@@ -15,6 +16,14 @@ export class CustomerService {
   create(createCustomerDto: CreateCustomerDto): Promise<Customer> {
     const customer = new Customer()
     customer.name = createCustomerDto.name
+    return this.customerRepository.save(customer)
+  }
+
+  update(
+    customer: Customer,
+    updateCustomerDto: UpdateCustomerDto,
+  ): Promise<Customer> {
+    customer.name = updateCustomerDto.name
     return this.customerRepository.save(customer)
   }
 
