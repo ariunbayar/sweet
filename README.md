@@ -154,6 +154,18 @@ Order {
 | `cancelled`  | The order has been canceled.                                        |
 | `rejected`   | The order has been rejected (e.g., due to insufficient inventory).  |
 
+**Transitions**
+
+```mermaid
+stateDiagram-v2
+    [*] --> pending
+    pending --> processing : picked & packed
+    processing --> shipped: handed off to carrier
+    shipped --> delivered: confirmed delivered
+    pending --> cancelled: customer cancels
+    pending --> rejected: inventory issues
+```
+
 ## API Endpoints
 
 | HTTP Method | Endpoint               | Description                       |
