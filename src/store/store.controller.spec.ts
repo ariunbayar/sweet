@@ -70,14 +70,8 @@ describe('StoreController', () => {
     it('throws an error if store is not found', async () => {
       jest.spyOn(service, 'findOne').mockResolvedValue(null)
 
-      try {
-        await controller.findOne(2)
-        fail('Expected NotFoundException to be thrown')
-      } catch (error) {
-        expect(error).toBeInstanceOf(NotFoundException)
-        expect(error.message).toEqual('Not found')
-        expect(service.findOne).toHaveBeenCalledWith(2)
-      }
+      await expect(controller.findOne(2)).rejects.toThrow(NotFoundException)
+      expect(service.findOne).toHaveBeenCalledWith(2)
     })
   })
 
@@ -172,18 +166,10 @@ describe('StoreController', () => {
     it('throws an error if store is not found', async () => {
       jest.spyOn(service, 'findOne').mockResolvedValue(null)
 
-      try {
-        await controller.update(2, {
-          address: '123 Broadway, New York, NY 10007, USA',
-          manager_name: 'David Lee',
-        })
-        fail('Expected NotFoundException to be thrown')
-      } catch (error) {
-        expect(error).toBeInstanceOf(NotFoundException)
-        expect(error.message).toEqual('Not found')
-        expect(service.findOne).toHaveBeenCalledWith(2)
-        expect(service.update).not.toHaveBeenCalled()
-      }
+      await expect(controller.update(2, {})).rejects.toThrow(NotFoundException)
+
+      expect(service.findOne).toHaveBeenCalledWith(2)
+      expect(service.update).not.toHaveBeenCalled()
     })
   })
 })

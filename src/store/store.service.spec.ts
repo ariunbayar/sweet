@@ -92,7 +92,11 @@ describe('StoreService', () => {
       jest.spyOn(repository, 'find').mockResolvedValue(stores)
 
       expect(service.findAll(0, 10)).resolves.toEqual(stores)
-      expect(repository.find).toHaveBeenCalledWith({ skip: 0, take: 10 })
+      expect(repository.find).toHaveBeenCalledWith({
+        skip: 0,
+        take: 10,
+        order: { id: 'ASC' },
+      })
     })
   })
 

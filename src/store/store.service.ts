@@ -10,30 +10,34 @@ import { UpdateStoreDto } from './dto/update-store.dto'
 export class StoreService {
   constructor(
     @InjectRepository(Store)
-    private customerRepository: Repository<Store>,
+    private storeRepository: Repository<Store>,
   ) {}
 
   create(createStoreDto: CreateStoreDto): Promise<Store> {
-    const customer = new Store()
-    customer.address = createStoreDto.address
-    customer.manager_name = createStoreDto.manager_name
-    return this.customerRepository.save(customer)
+    const store = new Store()
+    store.address = createStoreDto.address
+    store.manager_name = createStoreDto.manager_name
+    return this.storeRepository.save(store)
   }
 
   findOne(id: number): Promise<Store | null> {
-    return this.customerRepository.findOneBy({ id })
+    return this.storeRepository.findOneBy({ id })
   }
 
   findAll(offset: number, limit: number): Promise<Store[]> {
-    return this.customerRepository.find({ skip: offset, take: limit })
+    return this.storeRepository.find({
+      skip: offset,
+      take: limit,
+      order: { id: 'ASC' },
+    })
   }
 
   count(): Promise<number> {
-    return this.customerRepository.count()
+    return this.storeRepository.count()
   }
 
   update(store: Store, updateStoreDto: UpdateStoreDto): Promise<Store> {
     store = { ...store, ...updateStoreDto }
-    return this.customerRepository.save(store)
+    return this.storeRepository.save(store)
   }
 }

@@ -104,9 +104,13 @@ Order {
 | GET         | [/customers/:id](#get-customersid) | View a specific customer by ID    |
 | PUT         | [/customers/:id](#put-customersid) | Modify customer by ID |
 | GET         | [/stores](#get-stores)       | List all stores             |
-| POST        | [/stores](#post-stores)      | Create a new store |
+| POST        | [/stores](#post-stores)      | Create a new store          |
 | GET         | [/stores/:id](#get-storesid) | View a specific store by ID |
-| PUT         | [/stores/:id](#put-storesid) | Modify store by ID |
+| PUT         | [/stores/:id](#put-storesid) | Modify store by ID          |
+| GET         | [/inventories](#get-inventories)       | List all inventories            |
+| POST        | [/inventories](#post-inventories)      | Create a new inventory          |
+| GET         | [/inventories/:id](#get-inventoriesid) | View a specific inventory by ID |
+| PUT         | [/inventories/:id](#put-inventoriesid) | Modify inventory by ID          |
 
 ### GET /customers
 
@@ -280,6 +284,103 @@ Updates a store by ID.
 ```json
 {"message":"Not found","error":"Not Found","statusCode":404}
 ```
+
+### GET /inventories
+
+Retrieves a list of all inventories. Ordered by ID ascending.
+
+**Query Parameters:**
+
+* offset (optional): Offset number (default: 0)
+* limit (optional): Number of inventories per page (default: 10. Max 100)
+
+**Response (200 OK):**
+
+```json
+{
+  "result": [
+    {
+      "id": 1,
+      "name": "SmartiesBoxTruck",
+      "manufactured_at": "2023-10-26T00:00:00.000Z",
+      "quantity": 100
+    },
+    {
+      "id": 2,
+      "name": "CandyCornRv",
+      "manufactured_at": "2023-10-27T00:00:00.000Z",
+      "quantity": 50
+    }
+  ],
+  "pagination": {
+    "offset": 0,
+    "limit": 10,
+    "total": 2
+  }
+}
+```
+
+### POST /inventories
+
+Creates a new inventory
+
+**Payload**
+
+```json
+{ "name": "CandyCornRv", "manufactured_at": "2023-10-27T00:00:00.000Z", "quantity": 50 }
+```
+
+**Response (201 OK):**
+
+```json
+{ "id": 3, "name": "CandyCornRv", "manufactured_at": "2023-10-27T00:00:00.000Z", "quantity": 50 },
+```
+
+### GET /inventories/:id
+
+View inventory by id
+
+**Response (200 OK):**
+
+```json
+{ "id": 1, "name": "SmartiesBoxTruck", "manufactured_at": "2023-10-26T00:00:00.000Z", "quantity": 100}
+```
+
+**Response (404 Not found):**
+
+```json
+{"message":"Not found","error":"Not Found","statusCode":404}
+```
+
+### PUT /inventories/:id
+
+Updates an inventory by ID.
+
+**Payload**
+
+```js
+{
+  "quantity": 150
+}
+```
+
+**Response (200 OK):**
+
+```js
+{
+  "id": 1,
+  "name": "SmartiesBoxTruck",
+  "manufactured_at": "2023-10-26T00:00:00.000Z",
+  "quantity": 150 // Updated quantity
+}
+```
+
+**Response (404 Not found):**
+
+```json
+{"message":"Not found","error":"Not Found","statusCode":404}
+```
+
 
 ## License
 
