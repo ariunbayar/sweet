@@ -143,6 +143,17 @@ Order {
 }
 ```
 
+### Order Statuses
+
+| Status       | Description                                                         |
+|--------------|---------------------------------------------------------------------|
+| `pending`    | The order has been placed but hasn't been processed yet.            |
+| `processing` | The order is being prepared for shipment.                           |
+| `shipped`    | The order has been shipped.                                         |
+| `delivered`  | The order has been delivered.                                       |
+| `cancelled`  | The order has been canceled.                                        |
+| `rejected`   | The order has been rejected (e.g., due to insufficient inventory).  |
+
 ## API Endpoints
 
 | HTTP Method | Endpoint               | Description                       |
@@ -159,6 +170,10 @@ Order {
 | POST        | [/inventories](#post-inventories)      | Create a new inventory          |
 | GET         | [/inventories/:id](#get-inventoriesid) | View a specific inventory by ID |
 | PUT         | [/inventories/:id](#put-inventoriesid) | Modify inventory by ID          |
+| GET         | [/orders](#get-orders)       | List all orders             |
+| POST        | [/orders](#post-orders)      | Create a new order          |
+| GET         | [/orders/:id](#get-ordersid) | View a specific order by ID |
+| PUT         | [/orders/:id](#put-ordersid) | Modify order by ID          |
 
 ### GET /customers
 
@@ -429,6 +444,125 @@ Updates an inventory by ID.
 {"message":"Not found","error":"Not Found","statusCode":404}
 ```
 
+### GET /orders
+
+Retrieves a list of all orders. Ordered by ID ascending.
+
+**Query Parameters:**
+
+* offset (optional): Offset number (default: 0)
+* limit (optional): Number of orders per page (default: 10. Max 100)
+
+**Response (200 OK):**
+
+```json
+{
+  "result": [
+    {
+      "id": 1,
+      "customer_id": 1,
+      "inventory_id": 1,
+      "store_id": 1,
+      "quantity": 10,
+      "status": "pending",
+      "created_at": "2023-10-26T00:00:00.000Z",
+      "updated_at": "2023-10-26T00:00:00.000Z"
+    }
+  ],
+  "pagination": {
+    "offset": 0,
+    "limit": 10,
+    "total": 1
+  }
+}
+```
+
+### POST /orders
+
+Creates a new order
+
+**Payload**
+```json
+{
+  "customer_id": 2,
+  "inventory_id": 3,
+  "store_id": 1,
+  "quantity": 5,
+  "status": "pending"
+}
+```
+
+**Response (201 OK):**
+
+```json
+{
+  "id": 3,
+  "customer_id": 2,
+  "inventory_id": 3,
+  "store_id": 1,
+  "quantity": 5,
+  "status": "pending",
+  "created_at": "2023-10-27T00:00:00.000Z",
+  "updated_at": "2023-10-27T00:00:00.000Z"
+}
+```
+
+### GET /orders/:id
+
+View order by id
+
+**Response (200 OK):**
+
+```json
+{
+  "id": 1,
+  "customer_id": 1,
+  "inventory_id": 1,
+  "store_id": 1,
+  "quantity": 10,
+  "status": "shipped",
+  "created_at": "2023-10-26T00:00:00.000Z",
+  "updated_at": "2023-10-26T00:00:00.000Z"
+}
+```
+
+**Response (404 Not found):**
+
+```json
+{"message":"Not found","error":"Not Found","statusCode":404}
+```
+
+### PUT /orders/:id
+
+Updates the store by ID
+
+**Payload**
+```js
+{
+  "status": "shipped"
+}
+```
+
+**Response (200 OK):**
+
+```js
+{
+  "id": 1,
+  "customer_id": 1,
+  "inventory_id": 1,
+  "store_id": 1,
+  "quantity": 10,
+  "status": "shipped",  // updated status
+  "created_at": "2023-10-26T00:00:00.000Z",
+  "updated_at": "2023-10-26T00:00:00.000Z"
+}
+```
+
+**Response (404 Not found):**
+
+```json
+{"message":"Not found","error":"Not Found","statusCode":404}
+```
 
 ## License
 
