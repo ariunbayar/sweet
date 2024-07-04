@@ -49,6 +49,7 @@ describe('StoreService', () => {
         address: '123 Broadway, New York, NY 10007, USA',
         manager_name: 'David Lee',
       })
+      expect(repository.save).toHaveBeenCalledWith(createStoreDto)
     })
   })
 
