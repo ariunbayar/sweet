@@ -1,6 +1,54 @@
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Handles the backend data integration for consumers and candy products.
+
+## Architecture
+
+```mermaid
+graph LR
+subgraph Client
+    A[Web/Mobile App]
+end
+subgraph API Layer
+    B[REST API]
+end
+subgraph Application Layer
+    C[Controllers] --> D[Use Cases]
+end
+subgraph Domain Layer
+    D[Use Cases] --> E[Entities]
+end
+subgraph Infrastructure Layer
+    D[Use Cases] --> F[Repositories]
+end
+subgraph Database Layer
+    F[Repositories] --> G[(MySQL Database)]
+end
+
+A --> B
+B --> C
+```
+
+## Containerization
+
+```mermaid
+graph LR
+subgraph Host Machine
+    A[App code]
+    E[localhost:3000]
+end
+
+subgraph Docker Containers
+    B[db-data]
+    C[app]
+    D[db]
+end
+
+A -- COPY --> C
+B -- VOLUME --> D
+C -- TCP 3306 --> D
+E -- HTTP --> C
+```
 
 ## Setup
 
