@@ -1,11 +1,11 @@
-import { IsDateString, IsNotEmpty, IsString, IsNumber } from 'class-validator'
+import { IsNotEmpty, IsString, IsNumber, IsDate } from 'class-validator'
 
 export class CreateInventoryDto {
   @IsString()
   @IsNotEmpty()
   name: string
 
-  @IsDateString()
+  @IsDate()
   @IsNotEmpty()
   manufactured_at: Date
 
