@@ -2,7 +2,7 @@
 
 Handles the backend data integration for consumers and candy products.
 
-## Architecture
+## Data flow
 
 ```mermaid
 graph LR
