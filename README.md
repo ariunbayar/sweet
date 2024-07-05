@@ -33,21 +33,23 @@ B --> C
 
 ```mermaid
 graph LR
+E[web/mobile]
 subgraph Host Machine
     A[App code]
-    E[localhost:3000]
 end
 
 subgraph Docker Containers
     B[db-data]
     C[app]
     D[db]
+    F[redis]
 end
 
 A -- COPY --> C
 B -- VOLUME --> D
-C -- TCP 3306 --> D
+C --> D
 E -- HTTP --> C
+C --> F
 ```
 
 ## Setup
