@@ -9,16 +9,21 @@ import {
   Query,
   NotFoundException,
 } from '@nestjs/common'
+
 import { OrderService } from './order.service'
 import { CreateOrderDto } from './dto/create-order.dto'
 import { UpdateOrderDto } from './dto/update-order.dto'
 import { PaginationDto } from '../common/dto/pagination.dto'
 import { PaginatedResultDto } from '../common/dto/paginated-result.dto'
 import { Order } from './entities/order.entity'
+import { OrderMonthlyProducer } from './order_monthly.producer'
 
 @Controller('orders')
 export class OrderController {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(
+    private readonly orderService: OrderService,
+    private readonly orderMonthlyProducer: OrderMonthlyProducer,
+  ) {}
 
   @Get()
   async findAll(@Query() paginationDto: PaginationDto) {
@@ -39,7 +44,11 @@ export class OrderController {
 
   @Post()
   async create(@Body() createOrderDto: CreateOrderDto) {
-    return this.orderService.create(createOrderDto)
+    const order: Order = await this.orderService.create(createOrderDto)
+
+    this.orderMonthlyProducer.publish(order)
+
+    return order
   }
 
   @Get(':id')
