@@ -6,15 +6,16 @@ import { OrderService } from './order.service'
 import { OrderController } from './order.controller'
 import { OrderProcessor } from './order.processor'
 import { Order } from './entities/order.entity'
+import { OrderMonthly } from '../report/entities/order_monthly.entity'
+import { OrderMonthlyProducer } from './order_monthly.producer'
+import { QUEUE_ORDER } from './order.const'
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Order]),
-    BullModule.registerQueue({
-      name: 'order',
-    }),
+    TypeOrmModule.forFeature([Order, OrderMonthly]),
+    BullModule.registerQueue({ name: QUEUE_ORDER }),
   ],
-  providers: [OrderService, OrderProcessor],
+  providers: [OrderService, OrderProcessor, OrderMonthlyProducer],
   controllers: [OrderController],
 })
 export class OrderModule {}

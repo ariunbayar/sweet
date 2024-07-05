@@ -13,20 +13,55 @@ subgraph API Layer
     B[REST API]
 end
 subgraph Application Layer
-    C[Controllers] --> D[Use Cases]
-end
-subgraph Domain Layer
-    D[Use Cases] --> E[Entities]
-end
-subgraph Infrastructure Layer
-    D[Use Cases] --> F[Repositories]
+    C[Customer Controller]
+    D[Customer Service]
+    E[Store Controller]
+    F[Store Service]
+    G[Inventory Controller]
+    H[Inventory Service]
+    I[Order Controller]
+    J[Order Service]
+    K[Report Controller]
+    L[Report Service]
+    Q[Report Repository]
+    M[Customer Repository]
+    N[Store Repository]
+    O[Inventory Repository]
+    P[Order Repository]
+    R[Order Producer]
 end
 subgraph Database Layer
-    F[Repositories] --> G[(MySQL Database)]
+    S[MySQL Database]
+    S[MySQL Database]
+    S[MySQL Database]
+    S[MySQL Database]
+    S[MySQL Database]
+    T[Redis]
 end
 
 A --> B
 B --> C
+B --> E
+B --> G
+B --> I
+B --> K
+C --> D
+E --> F
+G --> H
+I --> J
+K --> L
+D --> M
+F --> N
+H --> O
+J --> P
+J --> R
+L --> Q
+M --> S
+N --> S
+O --> S
+P --> S
+Q --> S
+R --> T
 ```
 
 ## Containerization

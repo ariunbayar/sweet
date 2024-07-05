@@ -1,12 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing'
+import { NotFoundException } from '@nestjs/common'
+
 import { OrderController } from './order.controller'
 import { OrderService } from './order.service'
-import { NotFoundException } from '@nestjs/common'
 import { OrderStatus } from '../common/enums/order-status.enum'
+import { OrderMonthlyProducer } from './order_monthly.producer'
 
 describe('OrderController', () => {
   let controller: OrderController
   let service: OrderService
+  let orderMonthlyProducer: OrderMonthlyProducer
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -22,11 +25,19 @@ describe('OrderController', () => {
             update: jest.fn(),
           },
         },
+        {
+          provide: OrderMonthlyProducer,
+          useValue: {
+            publish: jest.fn(),
+          },
+        },
       ],
     }).compile()
 
     controller = module.get<OrderController>(OrderController)
     service = module.get<OrderService>(OrderService)
+    orderMonthlyProducer =
+      module.get<OrderMonthlyProducer>(OrderMonthlyProducer)
   })
 
   it('should be defined', () => {
@@ -50,9 +61,11 @@ describe('OrderController', () => {
       }
 
       jest.spyOn(service, 'create').mockResolvedValue(expected)
+      jest.spyOn(orderMonthlyProducer, 'publish').mockResolvedValue()
 
       expect(await controller.create(createOrderDto)).toEqual(expected)
       expect(service.create).toHaveBeenCalledWith(createOrderDto)
+      expect(orderMonthlyProducer.publish).toHaveBeenCalledWith(expected)
     })
   })
 
