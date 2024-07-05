@@ -9,6 +9,7 @@ import { CustomerModule } from './customer/customer.module'
 import { StoreModule } from './store/store.module'
 import { InventoryModule } from './inventory/inventory.module'
 import { OrderModule } from './order/order.module'
+import { ReportModule } from './report/report.module'
 import typeorm from './config/typeorm'
 
 @Module({
@@ -31,6 +32,7 @@ import typeorm from './config/typeorm'
     StoreModule,
     InventoryModule,
     OrderModule,
+    ReportModule,
   ],
   controllers: [AppController],
   providers: [AppService],
