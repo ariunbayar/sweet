@@ -12,8 +12,8 @@ import {
 import { OrderService } from './order.service'
 import { CreateOrderDto } from './dto/create-order.dto'
 import { UpdateOrderDto } from './dto/update-order.dto'
-import { PaginationDto } from '../dto/pagination.dto'
-import { PaginatedResultDto } from '../dto/paginated-result.dto'
+import { PaginationDto } from '../common/dto/pagination.dto'
+import { PaginatedResultDto } from '../common/dto/paginated-result.dto'
 import { Order } from './entities/order.entity'
 
 @Controller('orders')

@@ -3,7 +3,7 @@ import { Repository } from 'typeorm'
 import { getRepositoryToken } from '@nestjs/typeorm'
 import { OrderService } from './order.service'
 import { Order } from './entities/order.entity'
-import { OrderStatus } from './enums/order-status.enum'
+import { OrderStatus } from '../common/enums/order-status.enum'
 
 describe('OrderService', () => {
   let service: OrderService

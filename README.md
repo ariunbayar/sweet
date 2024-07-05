@@ -194,7 +194,7 @@ stateDiagram-v2
 | POST        | [/orders](#post-orders)      | Create a new order          |
 | GET         | [/orders/:id](#get-ordersid) | View a specific order by ID |
 | PUT         | [/orders/:id](#put-ordersid) | Modify order by ID          |
-| GET         | [/report](#report)           | Monthly report for orders grouped by store and status |
+| GET         | [/report](#get-report)           | Monthly report for orders grouped by store and status |
 
 
 ### GET /customers

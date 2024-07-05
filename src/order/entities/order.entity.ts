@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
-import { OrderStatus } from '../enums/order-status.enum'
+import { OrderStatus } from '../../common/enums/order-status.enum'
 
 @Entity()
 export class Order {
