@@ -9,24 +9,23 @@ graph LR
 subgraph Client
     A[Web/Mobile App]
 end
-subgraph API Layer
-    B[REST API]
+B[REST API]
+C[Controllers]
+subgraph Service
+    F[Repositories]
 end
-subgraph Application Layer
-    C[Controllers] --> D[Use Cases]
-end
-subgraph Domain Layer
-    D[Use Cases] --> E[Entities]
-end
-subgraph Infrastructure Layer
-    D[Use Cases] --> F[Repositories]
-end
+H[Producer]
 subgraph Database Layer
-    F[Repositories] --> G[(MySQL Database)]
+    G[(MySQL Database)]
+    D[Redis]
 end
 
 A --> B
 B --> C
+C --> H
+C --> F
+F --> G
+H --> D
 ```
 
 ## Containerization
