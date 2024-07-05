@@ -5,46 +5,46 @@ Handles the backend data integration for consumers and candy products.
 ## Data flow
 
 ```mermaid
-graph LR
+graph
 subgraph Client
     A[Web/Mobile App]
 end
-subgraph API Layer
-    B[REST API]
-end
-subgraph Application Layer
+subgraph Controllers
     C[Customer Controller]
-    D[Customer Service]
     E[Store Controller]
-    F[Store Service]
     G[Inventory Controller]
-    H[Inventory Service]
     I[Order Controller]
-    J[Order Service]
     K[Report Controller]
+end
+subgraph Services
+    D[Customer Service]
+    F[Store Service]
+    H[Inventory Service]
+    J[Order Service]
     L[Report Service]
+end
+subgraph Repository
     Q[Report Repository]
     M[Customer Repository]
     N[Store Repository]
     O[Inventory Repository]
     P[Order Repository]
-    R[Order Producer]
 end
+
 subgraph Database Layer
-    S[MySQL Database]
-    S[MySQL Database]
-    S[MySQL Database]
-    S[MySQL Database]
     S[MySQL Database]
     T[Redis]
 end
 
-A --> B
-B --> C
-B --> E
-B --> G
-B --> I
-B --> K
+R[Order Producer]
+AA[Order Processor]
+
+T --> AA
+A --> C
+A --> E
+A --> G
+A --> I
+A --> K
 C --> D
 E --> F
 G --> H
@@ -62,6 +62,7 @@ O --> S
 P --> S
 Q --> S
 R --> T
+AA --> S
 ```
 
 ## Containerization
@@ -179,7 +180,7 @@ Order {
     date updated_at
 }
 
-ReportMonthly {
+OrderMonthly {
     int id PK
     varchar year_month
     int store_id FK
