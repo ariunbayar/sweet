@@ -37,5 +37,16 @@ services:
         env: "${APP_ENV}"
         compress: "true"
 
+  redis:
+    image: redis:alpine
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+        labels: "${APP_ENV},redis"
+        env: "${APP_ENV}"
+        compress: "true"
+
 volumes:
   db-data:
