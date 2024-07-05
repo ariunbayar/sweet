@@ -141,6 +141,14 @@ Order {
     date created_at
     date updated_at
 }
+
+ReportMonthly {
+    int id PK
+    varchar year_month
+    int store_id FK
+    varchar status
+    int quantity
+}
 ```
 
 ### Order Statuses
@@ -186,6 +194,8 @@ stateDiagram-v2
 | POST        | [/orders](#post-orders)      | Create a new order          |
 | GET         | [/orders/:id](#get-ordersid) | View a specific order by ID |
 | PUT         | [/orders/:id](#put-ordersid) | Modify order by ID          |
+| GET         | [/report](#report)           | Monthly report for orders grouped by store and status |
+
 
 ### GET /customers
 
@@ -574,6 +584,42 @@ Updates the store by ID
 
 ```json
 {"message":"Not found","error":"Not Found","statusCode":404}
+```
+
+### GET /report
+
+Monthly report for orders grouped by store and status
+
+**Query parameters**
+
+* year_month_min: YYYY-MM (default: current month)
+* year_month_max: YYYY-MM (default: current month)
+* store_ids (optional): Array store IDs (default: all stores)
+* status_list (optional): Array of status (default: all statuses)
+
+**Response (200 OK):**
+
+```json
+[
+  {
+    "store_id": 27,
+    "status": "pending",
+    "quantity": 10,
+    "year_month": "2023-10"
+  },
+  {
+    "store_id": 27,
+    "status": "shipped",
+    "quantity": 5,
+    "year_month": "2023-10"
+  },
+  {
+    "store_id": 13,
+    "status": "pending",
+    "quantity": 2,
+    "year_month": "2023-10"
+  },
+]
 ```
 
 ## License
