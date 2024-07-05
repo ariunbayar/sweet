@@ -592,8 +592,8 @@ Monthly report for orders grouped by store and status
 
 **Query parameters**
 
-* year_month_min (optional): YYYY-MM (default: current month)
-* year_month_max (optional): YYYY-MM (default: current month)
+* year_month_min: YYYY-MM (default: current month)
+* year_month_max: YYYY-MM (default: current month)
 * store_ids (optional): Array store IDs (default: all stores)
 * status_list (optional): Array of status (default: all statuses)
 
