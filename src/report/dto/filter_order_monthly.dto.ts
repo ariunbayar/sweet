@@ -1,5 +1,5 @@
 import { IsOptional, IsString, IsArray, IsInt, IsEnum } from 'class-validator'
-import { OrderStatus } from '../../order/enums/order-status.enum'
+import { OrderStatus } from '../../common/enums/order-status.enum'
 
 export class FilterOrderMonthlyDto {
   @IsString()

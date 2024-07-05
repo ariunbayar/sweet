@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { ReportController } from './report.controller'
 import { ReportService } from './report.service'
-import { OrderStatus } from '../order/enums/order-status.enum'
+import { OrderStatus } from '../common/enums/order-status.enum'
 
 describe('ReportController', () => {
   let controller: ReportController

@@ -4,7 +4,7 @@ import { getRepositoryToken } from '@nestjs/typeorm'
 
 import { ReportService } from './report.service'
 import { OrderMonthly } from './entities/order_monthly.entity'
-import { OrderStatus } from '../order/enums/order-status.enum'
+import { OrderStatus } from '../common/enums/order-status.enum'
 
 const manyOrderMonthly = [
   {

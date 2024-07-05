@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { OrderController } from './order.controller'
 import { OrderService } from './order.service'
 import { NotFoundException } from '@nestjs/common'
-import { OrderStatus } from './enums/order-status.enum'
+import { OrderStatus } from '../common/enums/order-status.enum'
 
 describe('OrderController', () => {
   let controller: OrderController

@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
 import { Index } from 'typeorm'
-import { OrderStatus } from '../../order/enums/order-status.enum' // TODO #51
+import { OrderStatus } from '../../common/enums/order-status.enum' // TODO #51
 
 @Entity('order_monthly')
 @Index(['store_id', 'year_month', 'status'], { unique: true })
