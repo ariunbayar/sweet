@@ -33,19 +33,11 @@ services:
       - redis
     restart: unless-stopped
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=${APP_ENV}
     ports:
       - "3000:3000"
     volumes:
       - .:/app
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: 256M
-        reservations:
-          cpus: '0.5'
-          memory: 256M
     logging:
       options:
         max-size: "10m"
