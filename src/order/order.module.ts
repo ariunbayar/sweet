@@ -13,7 +13,13 @@ import { QUEUE_ORDER } from './order.const'
 @Module({
   imports: [
     TypeOrmModule.forFeature([Order, OrderMonthly]),
-    BullModule.registerQueue({ name: QUEUE_ORDER }),
+    BullModule.registerQueue({
+      name: QUEUE_ORDER,
+      defaultJobOptions: {
+        removeOnComplete: true,
+        removeOnFail: false,
+      },
+    }),
   ],
   providers: [OrderService, OrderProcessor, OrderMonthlyProducer],
   controllers: [OrderController],
