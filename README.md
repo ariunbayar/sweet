@@ -121,6 +121,7 @@ make test
 make test-cov
 
 # load test
+docker compose run --rm k6 run --vus 100 --iterations 3000 --rps 400  /app/test/loadtest_get.spec.ts
 docker compose run --rm k6 run --vus 100 --iterations 3000 --rps 400  /app/test/loadtest_post_orders.spec.ts
 docker compose run --rm k6 run --vus 100 --iterations 3000 --rps 400  /app/test/loadtest_get_report.spec.ts
 ```
