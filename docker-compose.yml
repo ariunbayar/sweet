@@ -8,6 +8,14 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
     volumes:
       - db-data:/var/lib/mysql   # Persist data even if container is removed
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
     logging:
       options:
         max-size: "10m"
@@ -30,6 +38,14 @@ services:
       - "3000:3000"
     volumes:
       - .:/app
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 256M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
     logging:
       options:
         max-size: "10m"
@@ -41,6 +57,14 @@ services:
   redis:
     image: redis:alpine
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 50M
+        reservations:
+          cpus: '0.25'
+          memory: 25M
     logging:
       options:
         max-size: "10m"
@@ -48,6 +72,12 @@ services:
         labels: "${APP_ENV},redis"
         env: "${APP_ENV}"
         compress: "true"
+
+  k6:
+    image: grafana/k6
+    volumes:
+      - ./test:/app/test
+    command: ["--help"]
 
 volumes:
   db-data:
