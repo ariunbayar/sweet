@@ -1,5 +1,5 @@
 import http from 'k6/http'
-import k6 from 'k6'
+import { check } from 'k6'
 
 export default function () {
   const payload = {
@@ -17,6 +17,7 @@ export default function () {
       'Content-Type': 'application/json',
     },
   })
-  k6.metrics.add('response_time', res.timings.duration)
-  k6.metrics.add('response_code', res.status)
+  check(res, {
+    'Status 201 ': (res) => [201].includes(res.status),
+  })
 }
